@@ -33,7 +33,7 @@ export default function Hero({ setActiveTab, onOpenExplore, onOpenVideo }) {
             BUILT FOR <span className="text-primary text-glow">THE RIDE.</span>
           </h1>
 
-          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-lg leading-relaxed">
+          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
             Experience glanceable, turn-by-turn navigation on a dedicated display designed exclusively for motorcycles. Keep your phone safely tucked away and your focus on the road ahead.
           </p>
 
