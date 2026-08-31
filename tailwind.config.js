@@ -1,0 +1,118 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-secondary": "#003919",
+        "on-error": "#690005",
+        "secondary-fixed": "#6dfe9c",
+        "on-background": "#e0e3df",
+        "surface": "#101412",
+        "tertiary": "#7adb8d",
+        "surface-dim": "#101412",
+        "surface-container-low": "#181c1a",
+        "inverse-on-surface": "#2d312f",
+        "on-secondary-fixed-variant": "#005227",
+        "tertiary-fixed": "#95f8a7",
+        "on-primary-fixed-variant": "#005321",
+        "on-error-container": "#ffdad6",
+        "on-tertiary": "#003916",
+        "surface-container-high": "#272b28",
+        "on-secondary-container": "#003e1c",
+        "secondary-container": "#00b55d",
+        "on-primary-container": "#004b1e",
+        "on-primary": "#003915",
+        "primary-container": "#22c55e",
+        "outline": "#869585",
+        "on-secondary-fixed": "#00210c",
+        "tertiary-container": "#5ebf74",
+        "surface-container": "#1c201e",
+        "surface-variant": "#323633",
+        "primary-fixed": "#6bff8f",
+        "background": "#101412",
+        "surface-container-highest": "#323633",
+        "on-surface-variant": "#bccbb9",
+        "outline-variant": "#3d4a3d",
+        "on-surface": "#e0e3df",
+        "primary-fixed-dim": "#4ae176",
+        "inverse-surface": "#e0e3df",
+        "inverse-primary": "#006e2f",
+        "tertiary-fixed-dim": "#79db8d",
+        "on-tertiary-fixed": "#00210a",
+        "surface-bright": "#363a38",
+        "error": "#ffb4ab",
+        "secondary": "#4de082",
+        "primary": "#4be277",
+        "error-container": "#93000a",
+        "on-tertiary-container": "#004a1f",
+        "secondary-fixed-dim": "#4de082",
+        "surface-tint": "#4ae176",
+        "surface-container-lowest": "#0b0f0d",
+        "on-primary-fixed": "#002109",
+        "on-tertiary-fixed-variant": "#005323",
+      },
+      borderRadius: {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "2xl": "1rem",
+        "3xl": "1.5rem",
+        "full": "9999px"
+      },
+      spacing: {
+        "sm": "12px",
+        "base": "8px",
+        "margin-desktop": "64px",
+        "gutter": "24px",
+        "md": "24px",
+        "xs": "4px",
+        "lg": "48px",
+        "xl": "80px",
+        "margin-mobile": "16px"
+      },
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+        "label-caps": ["Inter", "sans-serif"],
+        "display-lg": ["Inter", "sans-serif"],
+        "mono-metric": ["Inter", "sans-serif"],
+        "display-lg-mobile": ["Inter", "sans-serif"],
+        "headline-md": ["Inter", "sans-serif"],
+        "body-md": ["Inter", "sans-serif"],
+        "headline-xl": ["Inter", "sans-serif"],
+        "body-lg": ["Inter", "sans-serif"]
+      },
+      fontSize: {
+        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+        "mono-metric": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+        "display-lg-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "0em", "fontWeight": "600" }],
+        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+        "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }]
+      },
+      boxShadow: {
+        "glow-sm": "0 0 15px rgba(75, 226, 119, 0.25)",
+        "glow": "0 0 30px rgba(75, 226, 119, 0.35)",
+        "glow-lg": "0 0 50px rgba(75, 226, 119, 0.5)",
+      },
+      animation: {
+        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "float": "float 6s ease-in-out infinite",
+        "spin-slow": "spin 12s linear infinite",
+      },
+      keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        }
+      }
+    }
+  },
+  plugins: [],
+}
