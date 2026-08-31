@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from './Logo';
 
 export default function Navbar({ activeTab, setActiveTab, onOpenExplore }) {
   const [scrolled, setScrolled] = useState(false);
@@ -39,12 +40,10 @@ export default function Navbar({ activeTab, setActiveTab, onOpenExplore }) {
             setActiveTab('home');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex items-center gap-2 text-left group"
+          className="flex items-center gap-3 text-left group cursor-pointer"
         >
-          <div className="w-9 h-9 rounded-full bg-primary/15 border border-primary flex items-center justify-center text-primary group-hover:shadow-glow-sm transition-all duration-300">
-            <span className="material-symbols-outlined text-xl">two_wheeler</span>
-          </div>
-          <span className="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+          <Logo className="w-10 h-10 group-hover:scale-105 transition-transform" />
+          <span className="font-headline-md text-headline-md font-extrabold text-primary tracking-tight">
             Just<span className="text-on-surface">Ride</span>
           </span>
         </button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Logo from './Logo';
 
 export default function Footer({ setActiveTab, onOpenExplore }) {
   return (
@@ -7,11 +8,9 @@ export default function Footer({ setActiveTab, onOpenExplore }) {
       <div className="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Brand & Mission */}
         <div className="md:col-span-2 flex flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-primary">
-              <span className="material-symbols-outlined text-lg">two_wheeler</span>
-            </div>
-            <span className="font-headline-md text-headline-md font-bold text-primary">JustRide</span>
+          <div className="flex items-center gap-3">
+            <Logo className="w-8 h-8" />
+            <span className="font-headline-md text-headline-md font-extrabold text-primary">JustRide</span>
           </div>
           <p className="font-body-md text-on-surface-variant max-w-sm leading-relaxed">
             Glanceable, ultra-bright motorcycle telemetry and navigation hardware built exclusively for riders. Keep your phone safe and your vision sharp.
