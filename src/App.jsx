@@ -36,15 +36,22 @@ export default function App() {
           >
             {activeTab === 'home' && (
               <HomePage
+                setActiveTab={setActiveTab}
                 onOpenExplore={() => setIsExploreOpen(true)}
                 onOpenVideo={() => setIsVideoOpen(true)}
               />
             )}
             {activeTab === 'about' && (
-              <AboutUsPage onOpenExplore={() => setIsExploreOpen(true)} />
+              <AboutUsPage
+                setActiveTab={setActiveTab}
+                onOpenExplore={() => setIsExploreOpen(true)}
+              />
             )}
             {activeTab === 'product' && (
-              <ProductPage onOpenExplore={() => setIsExploreOpen(true)} />
+              <ProductPage
+                setActiveTab={setActiveTab}
+                onOpenExplore={() => setIsExploreOpen(true)}
+              />
             )}
             {activeTab === 'download' && <DownloadPage />}
             {activeTab === 'contact' && <ContactUsPage />}

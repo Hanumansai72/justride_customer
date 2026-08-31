@@ -1,87 +1,155 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export default function AboutUsPage({ onOpenExplore }) {
-  const team = [
-    { name: 'Hanuman Sai', role: 'Founder & Lead Hardware Architect', icon: 'precision_manufacturing', bio: 'Avid track day rider and IoT hardware engineer dedicated to zero-distraction motorcycle cockpits.' },
-    { name: 'Kiran Varma', role: 'Firmware & BLE Protocol Engineer', icon: 'developer_board', bio: 'Specialist in ultra-low-latency Bluetooth 5.3 telemetry and RTOS embedded systems.' },
-    { name: 'Sanjay Reddy', role: 'Industrial Design & Aerodynamics', icon: 'architecture', bio: 'Expert in CNC aerospace alloy milling and IP67 hermetic acoustic/optical sealing.' },
+export default function AboutUsPage({ onOpenExplore, setActiveTab }) {
+  const principles = [
+    {
+      icon: 'two_wheeler',
+      title: 'Designed for Riders',
+      desc: 'Hardware built to withstand the elements, with an interface tailored for quick glances at high speeds.',
+    },
+    {
+      icon: 'bluetooth_connected',
+      title: 'Connected Technology',
+      desc: 'Seamless integration with your existing devices, turning your smartphone into an invisible powerhouse.',
+    },
+    {
+      icon: 'touch_app',
+      title: 'Simple Interaction',
+      desc: 'No complex menus or tiny buttons. Just the essential information presented precisely when you need it.',
+    },
   ];
 
   return (
-    <div className="py-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center max-w-3xl mx-auto mb-20"
-      >
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-mono font-bold uppercase mb-4">
-          Our Story & Philosophy
+    <div className="w-full flex-grow">
+      {/* 1. Hero Section with Night Cockpit Background */}
+      <section className="relative min-h-[716px] flex items-center px-margin-mobile md:px-margin-desktop py-xl overflow-hidden">
+        {/* Background Image with Dark Vignette & Gradient */}
+        <div className="absolute inset-0 z-0">
+          <div
+            className="bg-cover bg-center w-full h-full opacity-35 scale-105 transition-transform duration-1000"
+            style={{
+              backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDb63SnKUcF6pyVAMWgVeUTc5LfnOejoyt6l29jydjGTOL7fHwKV7ILt9tG0erBH8xI4jpJQkTXtiAPJPpmOhVD2T-wMeJJKfyEEe5sgoqNsZeLdCCK2tLs3qDOPwWMHMLpYeGT4N0hskesRSVt9w73MBREwojBrKg38W-jAUlDvI4ch5EWQIsO1DKhviEzZH2ZwXJT2LycUE3XN5wHJt-ct18Bk5WEetF8koDvW4WhLi4VzCd6b1En')`,
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+          <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/15 rounded-full blur-[130px] pointer-events-none"></div>
         </div>
-        <h1 className="font-display-lg-mobile md:font-display-lg font-extrabold text-on-surface uppercase tracking-tight leading-tight">
-          BUILT BY RIDERS.<br />
-          FOR <span className="text-primary text-glow">THE OPEN ROAD.</span>
-        </h1>
-        <p className="font-body-lg text-on-surface-variant mt-4 leading-relaxed">
-          JustRide was born out of a real problem: nearly crashing on a mountain hairpin because a phone mount rotated in the rain and reflected blinding sunlight. We set out to engineer the definitive motorcycle cockpit navigation instrument.
-        </p>
-      </motion.div>
 
-      {/* Core Principles */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-        {[
-          { icon: 'speed', title: 'Zero Distraction', desc: 'A glance must take under 250 milliseconds. Never overwhelm riders with complex maps or phone notifications while in motion.' },
-          { icon: 'shield', title: 'Mil-Spec Durability', desc: 'Motorcycles vibrate relentlessly and endure intense weather. We engineer every casing with aircraft aluminum and sapphire glass.' },
-          { icon: 'battery_saver', title: 'Zero Battery Anxiety', desc: 'No cords dangling to power banks. 14+ hours of standalone battery on a single rapid magnetic charge.' },
-        ].map((item, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="bg-surface-container/70 border border-outline-variant/40 rounded-2xl p-8 shadow-lg hover:border-primary/50 transition-colors"
-          >
-            <div className="w-12 h-12 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary mb-6">
-              <span className="material-symbols-outlined text-2xl">{item.icon}</span>
-            </div>
-            <h3 className="font-headline-md text-xl font-bold text-on-surface mb-3">{item.title}</h3>
-            <p className="font-body-md text-sm text-on-surface-variant leading-relaxed">{item.desc}</p>
-          </motion.div>
-        ))}
-      </div>
+        {/* Hero Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="relative z-10 max-w-4xl mx-auto md:mx-0"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-mono font-bold uppercase mb-4">
+            JustRide Origins & Story
+          </div>
+          <h1 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-md font-bold tracking-tight text-glow">
+            Built Around the Rider.
+          </h1>
+          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+            We started with a simple observation: smartphone navigation is distracting, dangerous, and poorly suited for the realities of riding. JustRide was born from the need to return focus to the road without sacrificing connectivity.
+          </p>
+        </motion.div>
+      </section>
 
-      {/* Team Section */}
-      <div className="mb-20">
-        <div className="text-center mb-12">
-          <span className="font-label-caps text-xs text-primary font-bold uppercase tracking-widest block mb-2">
-            Engineering Team
+      {/* 2. Mission Statement Section */}
+      <section className="px-margin-mobile md:px-margin-desktop py-xl bg-surface-container-low border-y border-outline-variant/30">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <span className="font-label-caps text-label-caps text-secondary tracking-widest uppercase mb-sm block font-bold">
+            Our Mission
           </span>
-          <h2 className="font-headline-xl text-3xl font-bold text-on-surface">The Minds Behind JustRide</h2>
-        </div>
+          <h2 className="font-headline-xl text-2xl md:text-4xl text-on-surface leading-tight font-extrabold">
+            "Make navigation simpler, clearer and more connected for every ride."
+          </h2>
+        </motion.div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {team.map((member, idx) => (
+      {/* 3. Principles Bento Grid ("Why JustRide") */}
+      <section className="px-margin-mobile md:px-margin-desktop py-xl max-w-7xl mx-auto">
+        <motion.h3
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="font-headline-md text-headline-md text-primary mb-lg font-bold tracking-wide"
+        >
+          Why JustRide
+        </motion.h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-md">
+          {principles.map((p, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="bg-surface-container/60 border border-outline-variant/30 rounded-2xl p-6 text-center hover:border-primary/40 transition-colors"
+              transition={{ duration: 0.5, delay: idx * 0.15 }}
+              whileHover={{ y: -6 }}
+              className="glass-panel p-md rounded-xl flex flex-col hover:border-primary/50 transition-all duration-300 group shadow-lg"
             >
-              <div className="w-20 h-20 rounded-full bg-surface-container-high border-2 border-primary/40 flex items-center justify-center text-primary mx-auto mb-4 shadow-glow-sm">
-                <span className="material-symbols-outlined text-3xl">{member.icon}</span>
+              <div className="w-14 h-14 rounded-2xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center text-tertiary mb-md group-hover:scale-110 group-hover:bg-primary/20 group-hover:text-primary group-hover:border-primary transition-all duration-300">
+                <span className="material-symbols-outlined text-4xl" data-icon={p.icon}>
+                  {p.icon}
+                </span>
               </div>
-              <h3 className="font-headline-md text-lg font-bold text-on-surface">{member.name}</h3>
-              <p className="text-xs font-mono text-primary uppercase font-semibold mb-3">{member.role}</p>
-              <p className="text-xs text-on-surface-variant leading-relaxed">{member.bio}</p>
+              <h4 className="font-headline-md text-xl text-on-surface mb-sm font-bold group-hover:text-primary transition-colors">
+                {p.title}
+              </h4>
+              <p className="font-body-md text-body-md text-on-surface-variant flex-grow leading-relaxed">
+                {p.desc}
+              </p>
             </motion.div>
           ))}
         </div>
-      </div>
+      </section>
+
+      {/* 4. Final CTA */}
+      <section className="px-margin-mobile md:px-margin-desktop py-xl text-center max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="glass-panel p-xl rounded-2xl max-w-3xl mx-auto border border-outline-variant/50 relative overflow-hidden shadow-2xl"
+        >
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-36 bg-primary/15 blur-3xl rounded-full pointer-events-none"></div>
+
+          <h2 className="font-headline-xl text-2xl md:text-4xl text-on-surface mb-md relative z-10 font-extrabold tracking-tight">
+            Discover JustRide
+          </h2>
+          <p className="font-body-lg text-body-lg text-on-surface-variant mb-lg relative z-10 max-w-xl mx-auto">
+            Experience the next generation of rider-focused navigation technology.
+          </p>
+
+          <div className="relative z-10 flex justify-center">
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => {
+                if (typeof setActiveTab === 'function') {
+                  setActiveTab('product');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else if (typeof onOpenExplore === 'function') {
+                  onOpenExplore();
+                }
+              }}
+              className="group relative bg-primary text-on-primary font-label-caps text-label-caps px-lg py-3 rounded-DEFAULT hover:bg-primary-fixed-dim transition-all glow-effect uppercase tracking-widest font-bold shadow-glow-sm cursor-pointer"
+            >
+              <span className="btn-glow"></span>
+              View Product
+            </motion.button>
+          </div>
+        </motion.div>
+      </section>
     </div>
   );
 }
