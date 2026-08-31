@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-export default function Hero({ onOpenExplore, onOpenVideo }) {
+export default function Hero({ setActiveTab, onOpenExplore, onOpenVideo }) {
   const [activeSpeed, setActiveSpeed] = useState(64);
   const [navDirection, setNavDirection] = useState('turn_right');
   const [distance, setDistance] = useState('250 m');
@@ -37,8 +37,8 @@ export default function Hero({ onOpenExplore, onOpenVideo }) {
             Experience glanceable, turn-by-turn navigation on a dedicated display designed exclusively for motorcycles. Keep your phone safely tucked away and your focus on the road ahead.
           </p>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-4">
+          {/* Primary Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 mt-2">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -60,6 +60,64 @@ export default function Hero({ onOpenExplore, onOpenVideo }) {
             >
               <span>See How It Works</span>
               <span className="material-symbols-outlined text-xl">play_circle</span>
+            </motion.button>
+          </div>
+
+          {/* Dedicated Android and iOS Companion App Download Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-1">
+            {/* Android Download Button */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                if (typeof setActiveTab === 'function') {
+                  setActiveTab('download');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="bg-surface-container/90 border border-outline-variant/60 hover:border-primary/60 rounded-xl px-4 py-2.5 flex items-center gap-3 transition-all duration-300 group text-left cursor-pointer shadow-sm hover:shadow-glow-sm"
+            >
+              <div className="w-9 h-9 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shrink-0">
+                <span className="material-symbols-outlined text-2xl" data-icon="android">
+                  android
+                </span>
+              </div>
+              <div>
+                <div className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider font-semibold">
+                  Download App
+                </div>
+                <div className="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">
+                  For Android
+                </div>
+              </div>
+            </motion.button>
+
+            {/* iOS Download Button */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                if (typeof setActiveTab === 'function') {
+                  setActiveTab('download');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="bg-surface-container/90 border border-outline-variant/60 hover:border-primary/60 rounded-xl px-4 py-2.5 flex items-center gap-3 transition-all duration-300 group text-left cursor-pointer shadow-sm hover:shadow-glow-sm"
+            >
+              <div className="w-9 h-9 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shrink-0">
+                {/* Clean Apple / iOS Logo */}
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 170 170" aria-label="Apple iOS Logo">
+                  <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.7-7.85-12-14.44-6.3-9.68-11.22-20.91-14.77-33.69-3.55-12.78-5.32-24.87-5.32-36.27 0-14.66 3.65-26.71 10.96-36.14 7.3-9.43 16.5-14.24 27.59-14.44 4.35 0 9.47 1.2 15.36 3.6 5.88 2.4 9.43 3.66 10.63 3.66 1.09 0 4.89-1.31 11.41-3.92 6.52-2.61 12.08-3.7 16.68-3.27 12.83.98 22.88 5.76 30.15 14.34-11.09 6.74-16.53 16.14-16.32 28.2.22 9.57 3.97 17.61 11.25 24.13 7.28 6.52 16.03 10.16 26.25 10.92-2.18 6.3-4.57 12.39-7.18 18.28zM119.22 31.84c0-7.18 2.61-13.91 7.83-20.18 5.22-6.27 11.63-10.22 19.24-11.86.87 7.4-1.63 14.19-7.51 20.37-5.87 6.18-12.38 9.94-19.56 11.67z" />
+                </svg>
+              </div>
+              <div>
+                <div className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider font-semibold">
+                  Download App
+                </div>
+                <div className="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">
+                  For iOS
+                </div>
+              </div>
             </motion.button>
           </div>
 

@@ -8,10 +8,14 @@ import TechSpecs from '../components/home/TechSpecs';
 import FAQ from '../components/home/FAQ';
 import CTASection from '../components/home/CTASection';
 
-export default function HomePage({ onOpenExplore, onOpenVideo }) {
+export default function HomePage({ setActiveTab, onOpenExplore, onOpenVideo }) {
   return (
     <div className="w-full">
-      <Hero onOpenExplore={onOpenExplore} onOpenVideo={onOpenVideo} />
+      <Hero
+        setActiveTab={setActiveTab}
+        onOpenExplore={onOpenExplore}
+        onOpenVideo={onOpenVideo}
+      />
       <ValueStrip />
       <ProblemSolution />
       <BentoGrid />
