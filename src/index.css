@@ -72,3 +72,28 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #4be277;
 }
+
+/* Custom Layout Utilities */
+.px-margin-desktop { padding-left: 64px; padding-right: 64px; }
+.px-margin-mobile { padding-left: 16px; padding-right: 16px; }
+.gap-gutter { gap: 24px; }
+.gap-md { gap: 24px; }
+.gap-lg { gap: 32px; }
+.gap-xl { gap: 48px; }
+.py-xl { padding-top: 64px; padding-bottom: 64px; }
+.p-md { padding: 24px; }
+.p-lg { padding: 32px; }
+.p-xl { padding: 48px; }
+.mb-sm { margin-bottom: 12px; }
+.mb-md { margin-bottom: 24px; }
+.mb-lg { margin-bottom: 32px; }
+.mb-xl { margin-bottom: 48px; }
+.mt-sm { margin-top: 12px; }
+.mt-md { margin-top: 24px; }
+.mt-lg { margin-top: 32px; }
+.mt-xl { margin-top: 48px; }
+.space-y-sm > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: calc(12px * calc(1 - var(--tw-space-y-reverse))); margin-bottom: calc(12px * var(--tw-space-y-reverse)); }
+.space-y-md > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: calc(24px * calc(1 - var(--tw-space-y-reverse))); margin-bottom: calc(24px * var(--tw-space-y-reverse)); }
+.space-y-lg > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: calc(32px * calc(1 - var(--tw-space-y-reverse))); margin-bottom: calc(32px * var(--tw-space-y-reverse)); }
+.space-x-lg > :not([hidden]) ~ :not([hidden]) { --tw-space-x-reverse: 0; margin-right: calc(32px * var(--tw-space-x-reverse)); margin-left: calc(32px * calc(1 - var(--tw-space-x-reverse))); }
+

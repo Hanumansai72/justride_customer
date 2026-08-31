@@ -65,15 +65,9 @@ export default {
         "full": "9999px"
       },
       spacing: {
-        "sm": "12px",
-        "base": "8px",
         "margin-desktop": "64px",
         "gutter": "24px",
-        "md": "24px",
-        "xs": "4px",
-        "lg": "48px",
-        "xl": "80px",
-        "margin-mobile": "16px"
+        "margin-mobile": "16px",
       },
       maxWidth: {
         'xs': '20rem',
