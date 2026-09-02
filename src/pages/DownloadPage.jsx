@@ -5,26 +5,40 @@ const API_BASE = import.meta.env.VITE_API_URL || 'https://justfai-backend.vercel
 
 export default function DownloadPage() {
   const [latestRelease, setLatestRelease] = useState(null);
+  const [latestFirmware, setLatestFirmware] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
-    const fetchLatestRelease = async () => {
+    const fetchLatestReleases = async () => {
       try {
-        const res = await fetch(`${API_BASE}/app-releases/latest?platform=android`);
-        const json = await res.json();
-        if (isMounted && json.success && json.data) {
-          setLatestRelease(json.data);
+        const [apkRes, fwRes] = await Promise.all([
+          fetch(`${API_BASE}/app-releases/latest?platform=android`).catch(() => null),
+          fetch(`${API_BASE}/firmware/latest`).catch(() => null),
+        ]);
+
+        if (isMounted && apkRes?.ok) {
+          const apkJson = await apkRes.json();
+          if (apkJson.success && apkJson.data) {
+            setLatestRelease(apkJson.data);
+          }
+        }
+
+        if (isMounted && fwRes?.ok) {
+          const fwJson = await fwRes.json();
+          if (fwJson.success && fwJson.data) {
+            setLatestFirmware(fwJson.data);
+          }
         }
       } catch (err) {
-        console.warn('Failed to fetch latest APK release:', err);
+        console.warn('Failed to fetch latest releases:', err);
       } finally {
         if (isMounted) setIsLoading(false);
       }
     };
 
-    fetchLatestRelease();
+    fetchLatestReleases();
     return () => {
       isMounted = false;
     };
@@ -169,20 +183,19 @@ export default function DownloadPage() {
         </motion.div>
       </div>
 
-      {/* Firmware OTA Section */}
+      {/* Firmware OTA Section (Dynamically powered by admin-selected featured release) */}
       <div className="bg-surface-container/60 border border-outline-variant/40 rounded-2xl p-8 max-w-4xl mx-auto text-center">
         <span className="font-mono text-xs text-primary uppercase font-bold tracking-widest block mb-1">
           Hardware Maintenance
         </span>
         <h3 className="font-headline-md text-2xl font-bold text-on-surface mb-2">
-          Latest Firmware: v2.5.4 Stable
+          Latest Firmware: v{latestFirmware?.version || '2.5.4'} {latestFirmware?.channel ? `(${latestFirmware.channel.toUpperCase()})` : 'Stable'}
         </h3>
         <p className="text-xs text-on-surface-variant max-w-md mx-auto mb-4">
           OTA updates download automatically through the mobile companion app via BLE.
         </p>
         <div className="inline-flex items-center gap-4 text-xs font-mono text-on-surface-variant">
-          <span>• 20% Faster Roundabout calculation</span>
-          <span>• Improved Sunlight Auto-dim curve</span>
+          <span>{latestFirmware?.release_notes || '• 20% Faster Roundabout calculation • Improved Sunlight Auto-dim curve'}</span>
         </div>
       </div>
     </div>
