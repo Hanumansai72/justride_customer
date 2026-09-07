@@ -64,7 +64,12 @@ export default function DownloadPage() {
   };
 
   const formatFileSize = (bytes) => {
-    if (!bytes) return '17.3 MB';
+    if (!bytes) return '0 B';
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) {
+      const kb = bytes / 1024;
+      return `${kb.toFixed(1)} KB`;
+    }
     const mb = bytes / (1024 * 1024);
     return `${mb.toFixed(1)} MB`;
   };
