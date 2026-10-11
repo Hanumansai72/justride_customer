@@ -6,10 +6,9 @@ import ProductPage from './pages/ProductPage';
 import DownloadPage from './pages/DownloadPage';
 import ContactUsPage from './pages/ContactUsPage';
 import EarlyAccessPage from './pages/EarlyAccessPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
 import useScrollReveal from './hooks/useScrollReveal';
 
-export const routes = { home: '/', about: '/about-us', product: '/product', download: '/download', contact: '/contact-us', earlyAccess: '/early-access', resetPassword: '/reset-password' };
+export const routes = { home: '/', about: '/about-us', product: '/product', download: '/download', contact: '/contact-us', earlyAccess: '/early-access' };
 
 const pathToPage = (path) => {
   const clean = path.replace(/\/$/, '') || '/';
@@ -25,7 +24,6 @@ const titles = {
   download: 'Download the JustRide App',
   contact: 'Contact JustRide',
   earlyAccess: 'JustRide Early Access | Keep Your Eyes on the Ride',
-  resetPassword: 'Reset your password | JustRide',
 };
 
 export default function App() {
@@ -53,7 +51,6 @@ export default function App() {
   };
 
   if (page === 'home' || page === 'earlyAccess') return <div className="site-shell"><a className="skip-link" href="#main-content">Skip to content</a><main id="main-content"><EarlyAccessPage /></main></div>;
-  if (page === 'resetPassword') return <main><ResetPasswordPage /></main>;
 
   return <div className="site-shell">
     <a className="skip-link" href="#main-content">Skip to content</a>
