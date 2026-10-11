@@ -26,7 +26,7 @@ export default function HomePage({ navigate }) {
           <p className="eyebrow eyebrow--line">SMART MOTORCYCLE NAVIGATION</p>
           <h1>Navigation that keeps your <em>focus on the ride.</em></h1>
           <p className="hero-lede">JustRide connects your phone and a dedicated motorcycle display, bringing essential navigation information into view.</p>
-          <div className="button-row"><a className="button button--primary" href="/product" onClick={(event) => navigate(event, 'product')}>Explore JustRide <ArrowRight size={17} /></a><a className="button button--ghost" href="/download" onClick={(event) => navigate(event, 'download')}>Download app <span aria-hidden="true">↗</span></a></div>
+          <div className="button-row"><a className="button button--primary" href="/product" onClick={(event) => navigate(event, 'product')}>Explore JustRide <ArrowRight size={17} /></a><a className="button button--ghost" href="/early-access" onClick={(event) => navigate(event, 'earlyAccess')}>I'm Interested <span aria-hidden="true">↗</span></a></div>
           <div className="hero-proof"><span><span className="proof-dot" />PHONE-POWERED ROUTES</span><span>DEDICATED RIDER DISPLAY</span></div>
         </div>
         <div className="hero-visual"><div className="hero-halo" /><img src={deviceImages.perspective} alt="JustRide motorcycle navigation device showing a turn, distance and route map" width="1254" height="1254" fetchPriority="high" /><div className="hero-caption"><span>JUSTRIDE / 01</span><span>THE CONNECTED DISPLAY</span></div></div>

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
-import HomePage from './pages/HomePage';
 import AboutUsPage from './pages/AboutUsPage';
 import ProductPage from './pages/ProductPage';
 import DownloadPage from './pages/DownloadPage';
 import ContactUsPage from './pages/ContactUsPage';
+import EarlyAccessPage from './pages/EarlyAccessPage';
 import useScrollReveal from './hooks/useScrollReveal';
 
-export const routes = { home: '/', about: '/about-us', product: '/product', download: '/download', contact: '/contact-us' };
+export const routes = { home: '/', about: '/about-us', product: '/product', download: '/download', contact: '/contact-us', earlyAccess: '/early-access' };
 
 const pathToPage = (path) => {
   const clean = path.replace(/\/$/, '') || '/';
@@ -18,11 +18,12 @@ const pathToPage = (path) => {
 };
 
 const titles = {
-  home: 'JustRide | Connected Motorcycle Navigation',
+  home: 'JustRide Early Interest | Keep Your Eyes on the Ride',
   about: 'About JustRide | Built Around the Ride',
   product: 'JustRide Device | Motorcycle Navigation Display',
   download: 'Download the JustRide App',
   contact: 'Contact JustRide',
+  earlyAccess: 'JustRide Early Access | Keep Your Eyes on the Ride',
 };
 
 export default function App() {
@@ -49,11 +50,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
+  if (page === 'home' || page === 'earlyAccess') return <div className="site-shell"><a className="skip-link" href="#main-content">Skip to content</a><main id="main-content"><EarlyAccessPage /></main></div>;
+
   return <div className="site-shell">
     <a className="skip-link" href="#main-content">Skip to content</a>
     <Navbar page={page} navigate={navigate} />
     <main id="main-content" key={page}>
-      {page === 'home' && <HomePage navigate={navigate} />}
       {page === 'about' && <AboutUsPage navigate={navigate} />}
       {page === 'product' && <ProductPage navigate={navigate} />}
       {page === 'download' && <DownloadPage navigate={navigate} />}
