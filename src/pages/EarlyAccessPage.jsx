@@ -6,7 +6,7 @@ import front from '../assets/onboarding-front.webp';
 import day from '../assets/onboarding-day.webp';
 import './early-access.css';
 
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'https://justfai-backend.vercel.app/api');
+const API_BASE = import.meta.env.DEV ? '/api' : 'https://backend.justride.cc/api';
 const benefits = [
   ['01', 'GLANCEABLE', 'See the next instruction without navigating through a phone interface.'],
   ['02', 'CONNECTED', 'Navigation stays in step with the JustRide mobile experience.'],
@@ -34,7 +34,7 @@ function InterestForm() {
       if (!response.ok || !result.success) throw new Error(result.message || 'Please try again.');
       setStatus('success');
     } catch (cause) {
-      setError(cause.message || 'We could not send your details. Please try again.');
+      setError(cause instanceof TypeError ? 'We could not send your details. Please try again.' : cause.message);
       setStatus('idle');
     }
   }
