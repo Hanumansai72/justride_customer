@@ -6,11 +6,18 @@ const REVEAL_SELECTOR = [
   '.hardware-panel', '.spec-row', '.download-card', '.contact-form',
   '.contact-layout > div', '.connection-card > div', '.gallery-stage',
   '.cta-band__inner > *', '.system-line',
+  '.early-feature-strip > span', '.early-heading-row > *',
+  '.early-benefits article', '.early-product__grid > *',
+  '.early-section-heading', '.early-steps article',
+  '.early-essentials .eyebrow', '.early-essentials h2',
+  '.early-essentials__grid > div', '.early-final__inner > *',
 ].join(', ');
 
 const STAGGERED_GROUPS = new Map([
   ['value-grid', 80], ['steps-grid', 80], ['about-system', 70],
   ['spec-table', 28], ['connection-card', 85],
+  ['early-feature-strip', 70], ['early-benefits', 80],
+  ['early-steps', 60], ['early-essentials__grid', 70],
 ]);
 
 export default function useScrollReveal(page) {
@@ -32,7 +39,7 @@ export default function useScrollReveal(page) {
       // Already visible content stays visible on load; it never flashes hidden.
       if (bounds.top < window.innerHeight * 0.95 && bounds.bottom > 0) return;
 
-      if (element.parentElement?.classList.contains('editorial-grid')) {
+      if (element.parentElement?.matches('.editorial-grid, .early-product__grid')) {
         element.classList.add(element === element.parentElement.firstElementChild ? 'motion-from-left' : 'motion-from-right');
       }
 
