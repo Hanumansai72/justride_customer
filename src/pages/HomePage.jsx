@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, Bluetooth, Compass, Cpu, Eye, Map, Smartphone, Usb, Wifi } from 'lucide-react';
 import { deviceImages } from '../assets/device';
 import SectionIntro from '../components/common/SectionIntro';
-import DisplayModes from '../components/common/DisplayModes';
 import PageCTA from '../components/common/PageCTA';
 
 const valueCards = [
@@ -29,9 +28,9 @@ export default function HomePage({ navigate }) {
           <div className="button-row"><a className="button button--primary" href="/product" onClick={(event) => navigate(event, 'product')}>Explore JustRide <ArrowRight size={17} /></a><a className="button button--ghost" href="/early-access" onClick={(event) => navigate(event, 'earlyAccess')}>I'm Interested <span aria-hidden="true">↗</span></a></div>
           <div className="hero-proof"><span><span className="proof-dot" />PHONE-POWERED ROUTES</span><span>DEDICATED RIDER DISPLAY</span></div>
         </div>
-        <div className="hero-visual"><div className="hero-halo" /><img src={deviceImages.perspective} alt="JustRide motorcycle navigation device showing a turn, distance and route map" width="1254" height="1254" fetchPriority="high" /><div className="hero-caption"><span>JUSTRIDE / 01</span><span>THE CONNECTED DISPLAY</span></div></div>
+        <div className="hero-visual"><div className="hero-halo" /><img src={deviceImages.front} alt="JustRide motorcycle navigation device showing a turn, distance and route map" width="1254" height="1254" fetchPriority="high" /><div className="hero-caption"><span>JUSTRIDE / 01</span><span>THE CONNECTED DISPLAY</span></div></div>
       </div>
-      <div className="container spec-strip" aria-label="Key product details"><span><Map size={17} /> 1.8-inch landscape display</span><span><Bluetooth size={17} /> Bluetooth 5 LE</span><span><Usb size={17} /> USB-C</span><span><Cpu size={17} /> ESP32-S3</span></div>
+      <div className="container spec-strip" aria-label="Key product details"><span><Map size={17} /> 1.43-inch circular display</span><span><Bluetooth size={17} /> Bluetooth 5 LE</span><span><Usb size={17} /> USB-C</span><span><Cpu size={17} /> ESP32-S3</span></div>
     </section>
 
     <section className="section section--light"><div className="container">
@@ -43,9 +42,7 @@ export default function HomePage({ navigate }) {
 
     <section className="section how-section"><div className="container"><SectionIntro eyebrow="HOW IT WORKS" title="A connected system, made simple.">From destination to display, the phone and JustRide work together through Bluetooth Low Energy.</SectionIntro><div className="steps-grid">{steps.map(([number, title, copy]) => <article className="step" key={number}><span className="step__number">{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div><div className="system-line"><Smartphone size={20} /><span>APP + ROUTE PROCESSING</span><ArrowRight size={16} /><Bluetooth size={20} /><span>BLE</span><ArrowRight size={16} /><Map size={20} /><span>JUSTRIDE DISPLAY</span><ArrowRight size={16} /><Eye size={20} /><span>RIDER</span></div></div></section>
 
-    <DisplayModes />
-
-    <section className="section hardware-section"><div className="container editorial-grid"><div className="editorial-copy"><SectionIntro eyebrow="PURPOSE-BUILT HARDWARE" title="Compact by design. Focused in function.">A landscape display, physical front power button, USB-C charging and the ESP32-S3 form the connected device.</SectionIntro><div className="hardware-facts"><div><Cpu size={22} /><strong>ESP32-S3</strong><span>16 MB Flash · 8 MB PSRAM</span></div><div><Wifi size={22} /><strong>2.4 GHz Wi-Fi</strong><span>Bluetooth 5 Low Energy (BLE)</span></div><div><Usb size={22} /><strong>USB-C</strong><span>Charging connection</span></div></div><a className="text-link" href="/product" onClick={(event) => navigate(event, 'product')}>View full specifications <ArrowRight size={17} /></a></div><div className="editorial-image editorial-image--light"><img src={deviceImages.back} alt="Back of the JustRide enclosure with USB-C port" width="1254" height="1254" loading="lazy" /><span className="image-index">02 / HARDWARE</span></div></div></section>
+    <section className="section hardware-section"><div className="container editorial-grid"><div className="editorial-copy"><SectionIntro eyebrow="PURPOSE-BUILT HARDWARE" title="Compact by design. Focused in function.">A circular display, physical side power button, USB-C charging and the ESP32-S3 form the connected device.</SectionIntro><div className="hardware-facts"><div><Cpu size={22} /><strong>ESP32-S3</strong><span>16 MB Flash · 8 MB PSRAM</span></div><div><Wifi size={22} /><strong>2.4 GHz Wi-Fi</strong><span>Bluetooth 5 Low Energy (BLE)</span></div><div><Usb size={22} /><strong>USB-C</strong><span>Charging connection</span></div></div><a className="text-link" href="/product" onClick={(event) => navigate(event, 'product')}>View full specifications <ArrowRight size={17} /></a></div><div className="editorial-image editorial-image--light"><img src={deviceImages.side} alt="Side of the circular JustRide enclosure" width="1254" height="1254" loading="lazy" /><span className="image-index">02 / HARDWARE</span></div></div></section>
 
     <section className="section reroute-section"><div className="container reroute-layout"><div><p className="eyebrow">CONNECTED GUIDANCE</p><h2>Miss a turn?<br /><em>Keep riding.</em></h2></div><p>When the navigation system detects a route deviation, updated route information can be synchronized back to the device, keeping the display aligned with the current route.</p></div></section>
     <PageCTA navigate={navigate} />
