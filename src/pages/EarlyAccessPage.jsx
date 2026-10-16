@@ -24,6 +24,7 @@ function InterestForm() {
     if (!form.reportValidity()) return;
     const fields = new FormData(form);
     const payload = Object.fromEntries(fields);
+    payload.emailConsent = form.elements.emailConsent.checked;
     setStatus('sending');
     setError('');
     try {
@@ -37,7 +38,7 @@ function InterestForm() {
     }
   }
 
-  if (status === 'success') return <div className="interest-success" role="status" tabIndex="-1"><span className="interest-success__icon"><Check size={30} /></span><p className="eyebrow">INTEREST RECEIVED</p><h2>YOU'RE ON THE LIST.</h2><p>Thanks for your interest in JustRide. We'll keep you updated as the product develops.</p></div>;
+  if (status === 'success') return <div className="interest-success" role="status" tabIndex="-1"><span className="interest-success__icon"><Check size={30} /></span><p className="eyebrow">INTEREST RECEIVED</p><h2>YOU'RE ON THE LIST.</h2><p>Thanks for your interest in JustRide. Your details have been received.</p></div>;
 
   return <form className="interest-form" onSubmit={submit}>
     <div className="interest-form__grid">
@@ -48,7 +49,11 @@ function InterestForm() {
     <label>Would you consider buying JustRide? <select name="purchaseIntent" defaultValue=""><option value="">Select an option</option><option>Yes</option><option>Maybe</option><option>I want to know the price first</option></select></label>
     <label>What would you expect from JustRide? <span className="optional">Optional</span><textarea name="notes" rows="3" maxLength="1000" /></label>
     <div className="honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex="-1" autoComplete="off" /></label></div>
-    <p className="interest-consent">By submitting, you agree to be contacted about JustRide product updates and early-access opportunities.</p>
+    <label className="interest-email-consent">
+      <input type="checkbox" name="emailConsent" />
+      <span>I agree to receive future JustRide emails about product updates, preorder availability and early-access opportunities.</span>
+    </label>
+    <p className="interest-consent">Optional. You can join the interest list without subscribing to future emails. We’ll still email a confirmation of your submission.</p>
     {error && <p className="interest-error" role="alert">{error}</p>}
     <button className="button button--primary interest-submit" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'SENDING…' : "JOIN PREORDER LIST"}<ArrowRight size={18} /></button>
   </form>;

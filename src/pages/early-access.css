@@ -64,3 +64,5 @@
 }
 
 .early-hero__battery { color: var(--green); font-size: .85rem; font-weight: 650; margin: 0 0 18px; }
+.interest-form .interest-email-consent { display: flex; align-items: flex-start; gap: 10px; font-weight: 400; line-height: 1.5; }
+.interest-email-consent input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; accent-color: var(--green); }
