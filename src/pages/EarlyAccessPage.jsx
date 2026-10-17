@@ -19,6 +19,7 @@ function InterestForm() {
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [emailConsent, setEmailConsent] = useState(false);
   const [retryAfter, setRetryAfter] = useState(0);
   useEffect(() => {
     if (!retryAfter) return;
@@ -27,7 +28,7 @@ function InterestForm() {
   }, [retryAfter]);
   async function submit(event) {
     event.preventDefault();
-    if (retryAfter || status === 'sending') return;
+    if (retryAfter || status === 'sending' || !emailConsent) return;
     const form = event.currentTarget;
     if (!form.reportValidity()) return;
     const fields = new FormData(form);
@@ -64,12 +65,12 @@ function InterestForm() {
     <label>What would you expect from JustRide? <span className="optional">Optional</span><textarea name="notes" rows="3" maxLength="1000" /></label>
     <div className="honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex="-1" autoComplete="off" /></label></div>
     <label className="interest-email-consent">
-      <input type="checkbox" name="emailConsent" />
-      <span>I agree to receive future JustRide emails about product updates, preorder availability and early-access opportunities.</span>
+      <input type="checkbox" name="emailConsent" required checked={emailConsent} onChange={event => setEmailConsent(event.target.checked)} />
+      <span>I agree to receive JustRide emails, including my interest confirmation, product updates and availability announcements.</span>
     </label>
-    <p className="interest-consent">Optional. You can join the interest list without subscribing to future emails. We’ll still email a confirmation of your submission.</p>
+    <p className="interest-consent">Please confirm your email consent to register your interest.</p>
     {error && <p className="interest-error" role="alert">{error}</p>}
-    <button className="button button--primary interest-submit" type="submit" disabled={status === 'sending' || retryAfter > 0}>{retryAfter > 0 ? `TRY AGAIN IN ${retryAfter}s` : status === 'sending' ? 'SENDING…' : 'JOIN PREORDER LIST'}<ArrowRight size={18} /></button>
+    <button className="button button--primary interest-submit" type="submit" disabled={!emailConsent || status === 'sending' || retryAfter > 0}>{retryAfter > 0 ? `TRY AGAIN IN ${retryAfter}s` : status === 'sending' ? 'SENDING…' : "I'M INTERESTED"}<ArrowRight size={18} /></button>
   </form>;
 }
 
@@ -77,7 +78,7 @@ export default function EarlyAccessPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const nav = [['Product', '#product'], ['How It Works', '#how-it-works'], ['Specifications', '#specifications']];
   return <div className="early-page" id="top">
-    <header className="site-header early-header"><div className="container site-header__inner"><Brand /><nav className="early-nav" aria-label="Primary navigation">{nav.map(([name, href]) => <a key={href} href={href}>{name}</a>)}<a className="button button--primary" href="#interest">Preorder interest</a></nav><a className="button button--primary early-header__cta" href="#interest">Preorder interest</a><button className="early-menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="early-mobile-nav" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>{menuOpen ? '×' : '☰'}</button></div>{menuOpen && <nav id="early-mobile-nav" className="early-mobile-nav" aria-label="Mobile navigation">{nav.map(([name, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{name}</a>)}</nav>}</header>
+    <header className="site-header early-header"><div className="container site-header__inner"><Brand /><nav className="early-nav" aria-label="Primary navigation">{nav.map(([name, href]) => <a key={href} href={href}>{name}</a>)}<a className="button button--primary" href="#interest">Register interest</a></nav><a className="button button--primary early-header__cta" href="#interest">Register interest</a><button className="early-menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="early-mobile-nav" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>{menuOpen ? '×' : '☰'}</button></div>{menuOpen && <nav id="early-mobile-nav" className="early-mobile-nav" aria-label="Mobile navigation">{nav.map(([name, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{name}</a>)}</nav>}</header>
 
     <section className="early-hero">
       <div className="container early-hero__grid">
@@ -88,10 +89,10 @@ export default function EarlyAccessPage() {
           <p className="early-hero__battery">2500 mAh battery · 10–12-hour backup</p>
           <a className="text-link" href="#product">Explore the device <ArrowRight size={17} /></a>
         </div>
-        <aside className="early-hero__interest" id="interest" aria-labelledby="preorder-title">
-          <p className="eyebrow">PREORDER INTEREST</p>
-          <h2 id="preorder-title">BE FIRST IN LINE.</h2>
-          <p>Join the list for JustRide preorder and availability updates.</p>
+        <aside className="early-hero__interest" id="interest" aria-labelledby="interest-title">
+          <p className="eyebrow">REGISTER YOUR INTEREST</p>
+          <h2 id="interest-title">BE FIRST IN LINE.</h2>
+          <p>Register your interest for JustRide product and availability updates.</p>
           <InterestForm />
         </aside>
         <div className="early-hero__visual">
@@ -117,7 +118,7 @@ export default function EarlyAccessPage() {
     <section className="section early-essentials"><div className="container"><p className="eyebrow">BUILT AROUND RIDING</p><h2>LESS CLUTTER.<br /><em>MORE RIDE.</em></h2><div className="early-essentials__grid"><div><strong>CLEAR DIRECTIONS</strong><p>Large maneuver information for quick understanding.</p></div><div><strong>ROUTE VIEW</strong><p>See the route without a full phone interface.</p></div><div><strong>CONNECTED</strong><p>Works together with the JustRide mobile experience.</p></div><div><strong>COMPACT DISPLAY</strong><p>A dedicated view designed for the motorcycle.</p></div></div></div></section>
 
 
-    <section className="early-final"><div className="container early-final__inner"><div><p className="eyebrow">THE ROAD AHEAD</p><h2>LOOKS CLEARER.</h2><p>JustRide is being built for riders who want navigation to stay useful without taking over the ride.</p></div><a className="button button--primary" href="#interest">JOIN PREORDER LIST <ArrowRight size={18} /></a></div></section>
+    <section className="early-final"><div className="container early-final__inner"><div><p className="eyebrow">THE ROAD AHEAD</p><h2>LOOKS CLEARER.</h2><p>JustRide is being built for riders who want navigation to stay useful without taking over the ride.</p></div><a className="button button--primary" href="#interest">I'M INTERESTED <ArrowRight size={18} /></a></div></section>
     <footer className="early-footer"><div className="container early-footer__inner"><div><Brand /><p>Built around the ride.</p></div><nav aria-label="Footer navigation"><a href="#product">Product</a><a href="#how-it-works">How It Works</a><a href="mailto:info@justride.cc">Contact</a></nav><span>© {new Date().getFullYear()} JustRide</span></div></footer>
   </div>;
 }
