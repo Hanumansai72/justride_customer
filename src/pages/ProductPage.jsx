@@ -1,3 +1,4 @@
+import WebsiteFaqs from '../components/common/WebsiteFaqs';
 import React, { useState } from 'react';
 import { ArrowRight, Battery, Power } from 'lucide-react';
 import DeviceImage from '../components/common/DeviceImage';
@@ -32,7 +33,7 @@ export default function ProductPage({ navigate }) {
 
     <section className="section section--subtle"><div className="container app-integration"><div><SectionIntro eyebrow="APP + DEVICE" title="One connected riding experience.">The mobile app prepares and processes the route. Backend services and firmware support the system. Bluetooth Low Energy brings the essential instructions to the hardware display.</SectionIntro><a className="text-link" href="/download" onClick={(event) => navigate(event, 'download')}>Explore the app <ArrowRight size={17} /></a></div><div className="connection-card"><div><span>01</span><strong>JustRide app</strong><small>Destination + route</small></div><div><span>02</span><strong>Bluetooth LE</strong><small>Essential information</small></div><div><span>03</span><strong>JustRide device</strong><small>Rider display</small></div></div></div></section>
 
-    <section className="section faq-section"><div className="container"><SectionIntro eyebrow="PRODUCT NOTES" title="Good to know." /><div className="faq-list"><details><summary>Does JustRide replace my phone?</summary><p>No. The mobile app handles navigation and route processing, while the device presents the essentials on a dedicated display.</p></details><details><summary>What is the battery capacity and backup?</summary><p>JustRide has a 2500 mAh battery with 10–12 hours of backup.</p></details><details><summary>What happens if I miss a turn?</summary><p>When the navigation system detects a route deviation, updated route information can be synchronized back to the device.</p></details></div></div></section>
+    <WebsiteFaqs compact />
     <PageCTA navigate={navigate} />
   </>;
 }

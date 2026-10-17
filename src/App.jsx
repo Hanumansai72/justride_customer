@@ -6,9 +6,10 @@ import ProductPage from './pages/ProductPage';
 import DownloadPage from './pages/DownloadPage';
 import ContactUsPage from './pages/ContactUsPage';
 import EarlyAccessPage from './pages/EarlyAccessPage';
+import FaqPage from './pages/FaqPage';
 import useScrollReveal from './hooks/useScrollReveal';
 
-export const routes = { home: '/', about: '/about-us', product: '/product', download: '/download', contact: '/contact-us', earlyAccess: '/early-access' };
+export const routes = { home: '/', about: '/about-us', product: '/product', download: '/download', contact: '/contact-us', earlyAccess: '/early-access', faqs: '/faqs' };
 
 const pathToPage = (path) => {
   const clean = path.replace(/\/$/, '') || '/';
@@ -23,6 +24,7 @@ const titles = {
   product: 'JustRide Device | Motorcycle Navigation Display',
   download: 'Download the JustRide App',
   contact: 'Contact JustRide',
+  faqs: 'JustRide FAQs | Product, Navigation and App',
   earlyAccess: 'JustRide Early Access | Keep Your Eyes on the Ride',
 };
 
@@ -60,6 +62,7 @@ export default function App() {
       {page === 'product' && <ProductPage navigate={navigate} />}
       {page === 'download' && <DownloadPage navigate={navigate} />}
       {page === 'contact' && <ContactUsPage navigate={navigate} />}
+      {page === 'faqs' && <FaqPage />}
     </main>
     <Footer navigate={navigate} />
   </div>;

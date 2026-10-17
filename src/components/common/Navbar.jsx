@@ -5,7 +5,7 @@ import { routes } from '../../App';
 export const navItems = [
   { id: 'home', label: 'Home' }, { id: 'about', label: 'About Us' },
   { id: 'product', label: 'Product' }, { id: 'download', label: 'Download' },
-  { id: 'contact', label: 'Contact Us' },
+  { id: 'faqs', label: 'FAQs' }, { id: 'contact', label: 'Contact Us' },
 ];
 
 export default function Navbar({ page, navigate }) {

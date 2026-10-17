@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowRight, Battery, Bluetooth, Check, ChevronRight, Clock, Eye, Map, Smartphone } from 'lucide-react';
 import Logo from '../components/common/Logo';
 import DeviceImage from '../components/common/DeviceImage';
+import WebsiteFaqs from '../components/common/WebsiteFaqs';
 import './early-access.css';
 
 const API_BASE = import.meta.env.DEV ? '/api' : 'https://backend.justride.cc/api';
@@ -76,7 +77,7 @@ function InterestForm() {
 
 export default function EarlyAccessPage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const nav = [['Product', '#product'], ['How It Works', '#how-it-works'], ['Specifications', '#specifications']];
+  const nav = [['Product', '#product'], ['How It Works', '#how-it-works'], ['Specifications', '#specifications'], ['FAQs', '#faqs']];
   return <div className="early-page" id="top">
     <header className="site-header early-header"><div className="container site-header__inner"><Brand /><nav className="early-nav" aria-label="Primary navigation">{nav.map(([name, href]) => <a key={href} href={href}>{name}</a>)}<a className="button button--primary" href="#interest">Register interest</a></nav><a className="button button--primary early-header__cta" href="#interest">Register interest</a><button className="early-menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="early-mobile-nav" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>{menuOpen ? '×' : '☰'}</button></div>{menuOpen && <nav id="early-mobile-nav" className="early-mobile-nav" aria-label="Mobile navigation">{nav.map(([name, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{name}</a>)}</nav>}</header>
 
@@ -110,7 +111,7 @@ export default function EarlyAccessPage() {
 
     <section className="section early-why" id="product"><div className="container"><div className="early-heading-row"><div><p className="eyebrow">WHY JUSTRIDE</p><h2>EVERYTHING YOU NEED.<br /><span>NOTHING YOU DON'T.</span></h2></div><p>Your phone handles the route. JustRide keeps the essentials visible.</p></div><div className="early-benefits">{benefits.map(([number, title, copy]) => <article key={number}><span>{number} /</span><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
 
-    <section className="section early-product" id="specifications"><div className="container early-product__grid"><div className="early-product__visual"><DeviceImage view="side" alt="Side profile of the circular JustRide device and its power button" width="1254" height="1254" loading="lazy" /><span>01 / THE CIRCULAR DEVICE</span></div><div className="early-product__copy"><p className="eyebrow">THE PRODUCT EXPERIENCE</p><h2>SMALL DISPLAY.<br /><em>READY FOR THE RIDE.</em></h2><p className="section-lede">A circular display for the next turn, with a 2500 mAh battery and 10–12 hours of backup.</p><div className="early-product__facts"><div><span>01</span><strong>1.43-INCH DISPLAY</strong><small>Circular navigation display.</small></div><div><span>02</span><strong>2500 mAh BATTERY</strong><small>10–12-hour battery backup.</small></div><div><span>03</span><strong>TURN-BY-TURN NAVIGATION</strong><small>The next maneuver and distance at a glance.</small></div></div></div></div></section>
+    <section className="section early-product" id="specifications"><div className="container early-product__grid"><div className="early-product__visual"><DeviceImage view="side" alt="Side profile of the circular JustRide device and its power button" width="1254" height="1254" loading="lazy" /><span>01 / THE CIRCULAR DEVICE</span></div><div className="early-product__copy"><p className="eyebrow">THE PRODUCT EXPERIENCE</p><h2>SMALL DISPLAY.<br /><em>READY FOR THE RIDE.</em></h2><p className="section-lede">A circular display for the next turn, with a 2500 mAh battery and 10–12 hours of backup.</p><div className="early-product__facts"><div><span>01</span><strong>1.43-INCH DISPLAY</strong><small>Circular navigation display. <a href="/faqs">Product FAQs →</a></small></div><div><span>02</span><strong>2500 mAh BATTERY</strong><small>10–12-hour battery backup.</small></div><div><span>03</span><strong>TURN-BY-TURN NAVIGATION</strong><small>The next maneuver and distance at a glance.</small></div></div></div></div></section>
 
     <section className="section early-how" id="how-it-works"><div className="container"><div className="early-section-heading"><p className="eyebrow">HOW IT WORKS</p><h2>THREE STEPS.<br />ONE CLEARER RIDE.</h2><p className="section-lede">The app plans the route. The display brings the essentials into view.</p></div><div className="early-steps"><article><span>STEP 01</span><Smartphone size={27} /><h3>SET YOUR DESTINATION</h3><p>Choose where you're going in the JustRide app.</p></article><ChevronRight className="early-step-arrow" size={23} /><article><span>STEP 02</span><Bluetooth size={27} /><h3>CONNECT & RIDE</h3><p>Navigation information is synchronized with the JustRide device.</p></article><ChevronRight className="early-step-arrow" size={23} /><article><span>STEP 03</span><Eye size={27} /><h3>FOLLOW THE ESSENTIALS</h3><p>See the route and next maneuver directly on the display.</p></article></div></div></section>
 
@@ -118,7 +119,8 @@ export default function EarlyAccessPage() {
     <section className="section early-essentials"><div className="container"><p className="eyebrow">BUILT AROUND RIDING</p><h2>LESS CLUTTER.<br /><em>MORE RIDE.</em></h2><div className="early-essentials__grid"><div><strong>CLEAR DIRECTIONS</strong><p>Large maneuver information for quick understanding.</p></div><div><strong>ROUTE VIEW</strong><p>See the route without a full phone interface.</p></div><div><strong>CONNECTED</strong><p>Works together with the JustRide mobile experience.</p></div><div><strong>COMPACT DISPLAY</strong><p>A dedicated view designed for the motorcycle.</p></div></div></div></section>
 
 
+    <WebsiteFaqs compact />
     <section className="early-final"><div className="container early-final__inner"><div><p className="eyebrow">THE ROAD AHEAD</p><h2>LOOKS CLEARER.</h2><p>JustRide is being built for riders who want navigation to stay useful without taking over the ride.</p></div><a className="button button--primary" href="#interest">I'M INTERESTED <ArrowRight size={18} /></a></div></section>
-    <footer className="early-footer"><div className="container early-footer__inner"><div><Brand /><p>Built around the ride.</p></div><nav aria-label="Footer navigation"><a href="#product">Product</a><a href="#how-it-works">How It Works</a><a href="mailto:info@justride.cc">Contact</a></nav><span>© {new Date().getFullYear()} JustRide</span></div></footer>
+    <footer className="early-footer"><div className="container early-footer__inner"><div><Brand /><p>Built around the ride.</p></div><nav aria-label="Footer navigation"><a href="#product">Product</a><a href="#how-it-works">How It Works</a><a href="/faqs">FAQs</a><a href="mailto:info@justride.cc">Contact</a></nav><span>© {new Date().getFullYear()} JustRide</span></div></footer>
   </div>;
 }
