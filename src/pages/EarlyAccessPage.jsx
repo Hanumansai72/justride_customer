@@ -18,6 +18,7 @@ function Brand() {
 function InterestForm() {
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState('');
   const [retryAfter, setRetryAfter] = useState(0);
   useEffect(() => {
     if (!retryAfter) return;
@@ -42,6 +43,7 @@ function InterestForm() {
         setRetryAfter(Number.isFinite(seconds) && seconds > 0 ? Math.min(Math.ceil(seconds), 86400) : 60);
       }
       if (!response.ok || !result.success) throw new Error(result.message || 'Please try again.');
+      setConfirmationMessage(result.message);
       setStatus('success');
     } catch (cause) {
       setError(cause instanceof TypeError ? 'We could not send your details. Please try again.' : cause.message);
@@ -49,7 +51,7 @@ function InterestForm() {
     }
   }
 
-  if (status === 'success') return <div className="interest-success" role="status" tabIndex="-1"><span className="interest-success__icon"><Check size={30} /></span><p className="eyebrow">INTEREST RECEIVED</p><h2>YOU'RE ON THE LIST.</h2><p>Thanks for your interest in JustRide. Your details have been received.</p></div>;
+  if (status === 'success') return <div className="interest-success" role="status" tabIndex="-1"><span className="interest-success__icon"><Check size={30} /></span><p className="eyebrow">INTEREST RECEIVED</p><h2>YOU'RE ON THE LIST.</h2><p>{confirmationMessage || 'Thanks for your interest in JustRide. Your details have been received.'}</p></div>;
 
   return <form className="interest-form" onSubmit={submit}>
     <div className="interest-form__grid">
