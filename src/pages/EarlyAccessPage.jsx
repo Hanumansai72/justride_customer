@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, Battery, Bluetooth, Check, ChevronRight, Clock, Eye, Map, Smartphone } from 'lucide-react';
 import Logo from '../components/common/Logo';
-import { deviceImages } from '../assets/device';
+import DeviceImage from '../components/common/DeviceImage';
 import './early-access.css';
 
 const API_BASE = import.meta.env.DEV ? '/api' : 'https://backend.justride.cc/api';
@@ -18,8 +18,15 @@ function Brand() {
 function InterestForm() {
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
+  const [retryAfter, setRetryAfter] = useState(0);
+  useEffect(() => {
+    if (!retryAfter) return;
+    const timer = setTimeout(() => setRetryAfter(value => Math.max(0, value - 1)), 1000);
+    return () => clearTimeout(timer);
+  }, [retryAfter]);
   async function submit(event) {
     event.preventDefault();
+    if (retryAfter || status === 'sending') return;
     const form = event.currentTarget;
     if (!form.reportValidity()) return;
     const fields = new FormData(form);
@@ -30,6 +37,10 @@ function InterestForm() {
     try {
       const response = await fetch(`${API_BASE}/early-interest`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const result = await response.json();
+      if (response.status === 429 || response.status === 503) {
+        const seconds = Number(response.headers.get('Retry-After') || result.retryAfter);
+        setRetryAfter(Number.isFinite(seconds) && seconds > 0 ? Math.min(Math.ceil(seconds), 86400) : 60);
+      }
       if (!response.ok || !result.success) throw new Error(result.message || 'Please try again.');
       setStatus('success');
     } catch (cause) {
@@ -47,6 +58,7 @@ function InterestForm() {
       <label>City <span aria-hidden="true">*</span><input name="city" autoComplete="address-level2" minLength="2" maxLength="100" required /></label>
     </div>
     <label>Would you consider buying JustRide? <select name="purchaseIntent" defaultValue=""><option value="">Select an option</option><option>Yes</option><option>Maybe</option><option>I want to know the price first</option></select></label>
+    <label>Preferred price range <span className="optional">Optional</span><select name="priceRange" defaultValue=""><option value="">Select a price range</option><option value="4999-5999">₹4,999–₹5,999</option><option value="5999-6999">₹5,999–₹6,999</option><option value="6999-7999">₹6,999–₹7,999</option><option value="7999-8999">₹7,999–₹8,999</option></select></label>
     <label>What would you expect from JustRide? <span className="optional">Optional</span><textarea name="notes" rows="3" maxLength="1000" /></label>
     <div className="honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex="-1" autoComplete="off" /></label></div>
     <label className="interest-email-consent">
@@ -55,7 +67,7 @@ function InterestForm() {
     </label>
     <p className="interest-consent">Optional. You can join the interest list without subscribing to future emails. We’ll still email a confirmation of your submission.</p>
     {error && <p className="interest-error" role="alert">{error}</p>}
-    <button className="button button--primary interest-submit" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'SENDING…' : "JOIN PREORDER LIST"}<ArrowRight size={18} /></button>
+    <button className="button button--primary interest-submit" type="submit" disabled={status === 'sending' || retryAfter > 0}>{retryAfter > 0 ? `TRY AGAIN IN ${retryAfter}s` : status === 'sending' ? 'SENDING…' : 'JOIN PREORDER LIST'}<ArrowRight size={18} /></button>
   </form>;
 }
 
@@ -81,7 +93,7 @@ export default function EarlyAccessPage() {
           <InterestForm />
         </aside>
         <div className="early-hero__visual">
-          <img src={deviceImages.front} alt="Circular JustRide display showing a left turn in 300 metres" width="1254" height="1254" fetchPriority="high" />
+          <DeviceImage view="front" alt="Circular JustRide display showing a left turn in 300 metres" width="1254" height="1254" fetchPriority="high" />
           <span>JUSTRIDE / THE CIRCULAR RIDER DISPLAY</span>
         </div>
       </div>
@@ -95,7 +107,7 @@ export default function EarlyAccessPage() {
 
     <section className="section early-why" id="product"><div className="container"><div className="early-heading-row"><div><p className="eyebrow">WHY JUSTRIDE</p><h2>EVERYTHING YOU NEED.<br /><span>NOTHING YOU DON'T.</span></h2></div><p>Your phone handles the route. JustRide keeps the essentials visible.</p></div><div className="early-benefits">{benefits.map(([number, title, copy]) => <article key={number}><span>{number} /</span><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
 
-    <section className="section early-product" id="specifications"><div className="container early-product__grid"><div className="early-product__visual"><img src={deviceImages.side} alt="Side profile of the circular JustRide device and its power button" width="1254" height="1254" loading="lazy" /><span>01 / THE CIRCULAR DEVICE</span></div><div className="early-product__copy"><p className="eyebrow">THE PRODUCT EXPERIENCE</p><h2>SMALL DISPLAY.<br /><em>READY FOR THE RIDE.</em></h2><p className="section-lede">A circular display for the next turn, with a 2500 mAh battery and 10–12 hours of backup.</p><div className="early-product__facts"><div><span>01</span><strong>1.43-INCH DISPLAY</strong><small>Circular navigation display.</small></div><div><span>02</span><strong>2500 mAh BATTERY</strong><small>10–12-hour battery backup.</small></div><div><span>03</span><strong>TURN-BY-TURN NAVIGATION</strong><small>The next maneuver and distance at a glance.</small></div></div></div></div></section>
+    <section className="section early-product" id="specifications"><div className="container early-product__grid"><div className="early-product__visual"><DeviceImage view="side" alt="Side profile of the circular JustRide device and its power button" width="1254" height="1254" loading="lazy" /><span>01 / THE CIRCULAR DEVICE</span></div><div className="early-product__copy"><p className="eyebrow">THE PRODUCT EXPERIENCE</p><h2>SMALL DISPLAY.<br /><em>READY FOR THE RIDE.</em></h2><p className="section-lede">A circular display for the next turn, with a 2500 mAh battery and 10–12 hours of backup.</p><div className="early-product__facts"><div><span>01</span><strong>1.43-INCH DISPLAY</strong><small>Circular navigation display.</small></div><div><span>02</span><strong>2500 mAh BATTERY</strong><small>10–12-hour battery backup.</small></div><div><span>03</span><strong>TURN-BY-TURN NAVIGATION</strong><small>The next maneuver and distance at a glance.</small></div></div></div></div></section>
 
     <section className="section early-how" id="how-it-works"><div className="container"><div className="early-section-heading"><p className="eyebrow">HOW IT WORKS</p><h2>THREE STEPS.<br />ONE CLEARER RIDE.</h2><p className="section-lede">The app plans the route. The display brings the essentials into view.</p></div><div className="early-steps"><article><span>STEP 01</span><Smartphone size={27} /><h3>SET YOUR DESTINATION</h3><p>Choose where you're going in the JustRide app.</p></article><ChevronRight className="early-step-arrow" size={23} /><article><span>STEP 02</span><Bluetooth size={27} /><h3>CONNECT & RIDE</h3><p>Navigation information is synchronized with the JustRide device.</p></article><ChevronRight className="early-step-arrow" size={23} /><article><span>STEP 03</span><Eye size={27} /><h3>FOLLOW THE ESSENTIALS</h3><p>See the route and next maneuver directly on the display.</p></article></div></div></section>
 

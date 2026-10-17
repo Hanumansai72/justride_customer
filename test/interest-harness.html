@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Interest 429 regression harness</title></head>
+<body><div id="root"></div><script type="module">
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import EarlyAccessPage from '../src/pages/EarlyAccessPage.jsx';
+import '../src/index.css';
+// Isolated development fixture: no submission reaches the backend or email provider.
+window.fetch = async () => new Response(JSON.stringify({ success: false, message: 'Rate limit test. Please wait.', retryAfter: 120 }), {
+  status: 429, headers: { 'Content-Type': 'application/json', 'Retry-After': '120' },
+});
+createRoot(document.getElementById('root')).render(React.createElement(EarlyAccessPage));
+</script></body></html>
