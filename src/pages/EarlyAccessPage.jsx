@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Battery, Bluetooth, Check, ChevronRight, Clock, Eye, Map, Smartphone } from 'lucide-react';
-import Logo from '../components/common/Logo';
+import { LandingHeader, LandingFooter } from '../components/common/LandingNavigation';
 import DeviceImage from '../components/common/DeviceImage';
 import WebsiteFaqs from '../components/common/WebsiteFaqs';
 import './early-access.css';
@@ -11,10 +11,6 @@ const benefits = [
   ['02', 'CONNECTED', 'Navigation stays in step with the JustRide mobile experience.'],
   ['03', 'RIDER-FOCUSED', 'A dedicated display for what matters while riding.'],
 ];
-
-function Brand() {
-  return <a className="brand" href="#top" aria-label="JustRide, back to top"><Logo /><span>Just<span className="brand__accent">Ride</span></span></a>;
-}
 
 function InterestForm() {
   const [status, setStatus] = useState('idle');
@@ -76,10 +72,8 @@ function InterestForm() {
 }
 
 export default function EarlyAccessPage() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const nav = [['Product', '#product'], ['How It Works', '#how-it-works'], ['Specifications', '#specifications'], ['FAQs', '#faqs']];
   return <div className="early-page" id="top">
-    <header className="site-header early-header"><div className="container site-header__inner"><Brand /><nav className="early-nav" aria-label="Primary navigation">{nav.map(([name, href]) => <a key={href} href={href}>{name}</a>)}<a className="button button--primary" href="#interest">Register interest</a></nav><a className="button button--primary early-header__cta" href="#interest">Register interest</a><button className="early-menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="early-mobile-nav" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>{menuOpen ? '×' : '☰'}</button></div>{menuOpen && <nav id="early-mobile-nav" className="early-mobile-nav" aria-label="Mobile navigation">{nav.map(([name, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{name}</a>)}</nav>}</header>
+    <LandingHeader />
 
     <section className="early-hero">
       <div className="container early-hero__grid">
@@ -121,6 +115,6 @@ export default function EarlyAccessPage() {
 
     <WebsiteFaqs compact />
     <section className="early-final"><div className="container early-final__inner"><div><p className="eyebrow">THE ROAD AHEAD</p><h2>LOOKS CLEARER.</h2><p>JustRide is being built for riders who want navigation to stay useful without taking over the ride.</p></div><a className="button button--primary" href="#interest">I'M INTERESTED <ArrowRight size={18} /></a></div></section>
-    <footer className="early-footer"><div className="container early-footer__inner"><div><Brand /><p>Built around the ride.</p></div><nav aria-label="Footer navigation"><a href="#product">Product</a><a href="#how-it-works">How It Works</a><a href="/faqs">FAQs</a><a href="mailto:info@justride.cc">Contact</a></nav><span>© {new Date().getFullYear()} JustRide</span></div></footer>
+    <LandingFooter />
   </div>;
 }

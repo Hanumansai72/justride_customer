@@ -7,6 +7,7 @@ import DownloadPage from './pages/DownloadPage';
 import ContactUsPage from './pages/ContactUsPage';
 import EarlyAccessPage from './pages/EarlyAccessPage';
 import FaqPage from './pages/FaqPage';
+import { LandingHeader, LandingFooter } from './components/common/LandingNavigation';
 import useScrollReveal from './hooks/useScrollReveal';
 
 export const routes = { home: '/', about: '/about-us', product: '/product', download: '/download', contact: '/contact-us', earlyAccess: '/early-access', faqs: '/faqs' };
@@ -56,7 +57,7 @@ export default function App() {
 
   return <div className="site-shell">
     <a className="skip-link" href="#main-content">Skip to content</a>
-    <Navbar page={page} navigate={navigate} />
+    {page === 'faqs' ? <LandingHeader faqPage /> : <Navbar page={page} navigate={navigate} />}
     <main id="main-content" key={page}>
       {page === 'about' && <AboutUsPage navigate={navigate} />}
       {page === 'product' && <ProductPage navigate={navigate} />}
@@ -64,6 +65,6 @@ export default function App() {
       {page === 'contact' && <ContactUsPage navigate={navigate} />}
       {page === 'faqs' && <FaqPage />}
     </main>
-    <Footer navigate={navigate} />
+    {page === 'faqs' ? <LandingFooter faqPage /> : <Footer navigate={navigate} />}
   </div>;
 }
