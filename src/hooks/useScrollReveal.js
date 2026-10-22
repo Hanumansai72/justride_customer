@@ -11,6 +11,11 @@ const REVEAL_SELECTOR = [
   '.early-section-heading', '.early-steps article',
   '.early-essentials .eyebrow', '.early-essentials h2',
   '.early-essentials__grid > div', '.early-final__inner > *',
+  '.aventura-how h2', '.aventura-how__copy > p', '.aventura-journey details', '.aventura-details__heading > *',
+  '.aventura-preview__images', '.aventura-preview__controls > button', '.aventura-screen', '.aventura-final__inner > *',
+  '.display-study__heading > *', '.display-study__caption',
+  '.aventura-registration__copy', '.aventura-registration .interest-form',
+  '.early-page .website-faqs__heading', '.early-page .website-faqs__device', '.early-page .faq-list details',
 ].join(', ');
 
 const STAGGERED_GROUPS = new Map([
@@ -18,6 +23,8 @@ const STAGGERED_GROUPS = new Map([
   ['spec-table', 28], ['connection-card', 85],
   ['early-feature-strip', 70], ['early-benefits', 80],
   ['early-steps', 60], ['early-essentials__grid', 70],
+  ['aventura-details__grid', 90], ['aventura-specs', 75],
+  ['aventura-journey', 75], ['faq-list', 55],
 ]);
 
 export default function useScrollReveal(page) {
@@ -34,6 +41,7 @@ export default function useScrollReveal(page) {
     }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
 
     root.querySelectorAll(REVEAL_SELECTOR).forEach((element) => {
+      if (element.closest('dialog')) return;
       if (element.matches('.section-intro') && element.closest('.editorial-copy, .contact-layout')) return;
       const bounds = element.getBoundingClientRect();
       // Already visible content stays visible on load; it never flashes hidden.

@@ -1,13 +1,16 @@
 import React from 'react';
-import { ArrowRight, Bluetooth, Compass, Cpu, Eye, Map, Smartphone, Usb, Wifi } from 'lucide-react';
+import { ArrowRight, Battery, Bell, Bluetooth, Compass, Cpu, Eye, Lock, Map, Music, Smartphone, Usb, Wifi } from 'lucide-react';
 import DeviceImage from '../components/common/DeviceImage';
 import SectionIntro from '../components/common/SectionIntro';
 import PageCTA from '../components/common/PageCTA';
 
 const valueCards = [
-  { Icon: Compass, number: '01', title: 'Clear navigation', copy: 'Large maneuver and distance information designed to be understood at a glance.' },
-  { Icon: Bluetooth, number: '02', title: 'Connected experience', copy: 'Bluetooth Low Energy links the JustRide app and the dedicated device display.' },
-  { Icon: Eye, number: '03', title: 'Rider-focused display', copy: 'Route and relevant ride information, without recreating the full phone screen.' },
+  { Icon: Map, number: '01', title: '1.75-inch circular display', copy: 'Large, clear display designed for turn-by-turn navigation and essential ride metrics at a glance.' },
+  { Icon: Battery, number: '02', title: '10–12 hr battery life', copy: 'Built-in 1000 mAh rechargeable battery engineered to power full-day rides.' },
+  { Icon: Compass, number: '03', title: 'Turn-by-turn guidance', copy: 'Clear maneuver guidance with route context synchronized directly from your smartphone.' },
+  { Icon: Bell, number: '04', title: 'Calls & notifications', copy: 'View caller details, manage supported call controls and receive smart app alerts safely.' },
+  { Icon: Lock, number: '05', title: 'Twist-and-lock mount', copy: 'Secure, quick-release mounting mechanism built for vibration-resistant attachment.' },
+  { Icon: Smartphone, number: '06', title: 'Companion app & controls', copy: 'Manage routes, device preferences and music playback directly while you ride.' },
 ];
 
 const steps = [
@@ -30,7 +33,7 @@ export default function HomePage({ navigate }) {
         </div>
         <div className="hero-visual"><div className="hero-halo" /><DeviceImage view="front" alt="JustRide motorcycle navigation device showing a turn, distance and route map" width="1254" height="1254" fetchPriority="high" /><div className="hero-caption"><span>JUSTRIDE / 01</span><span>THE CONNECTED DISPLAY</span></div></div>
       </div>
-      <div className="container spec-strip" aria-label="Key product details"><span><Map size={17} /> 1.43-inch circular display</span><span><Bluetooth size={17} /> Bluetooth 5 LE</span><span><Usb size={17} /> USB-C</span><span><Cpu size={17} /> ESP32-S3</span></div>
+      <div className="container spec-strip" aria-label="Key product details"><span><Map size={17} /> 1.75-inch circular display</span><span><Battery size={17} /> 10–12 hr battery life</span><span><Bluetooth size={17} /> Bluetooth</span><span><Lock size={17} /> Twist-and-lock mount</span></div>
     </section>
 
     <section className="section section--light"><div className="container">

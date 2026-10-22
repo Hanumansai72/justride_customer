@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowRight, Battery, Bluetooth, Check, ChevronRight, Clock, Eye, Map, Smartphone } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, Check, LoaderCircle, X } from 'lucide-react';
 import { LandingHeader, LandingFooter } from '../components/common/LandingNavigation';
-import DeviceImage from '../components/common/DeviceImage';
 import WebsiteFaqs from '../components/common/WebsiteFaqs';
+import InterfaceShowcase from '../components/common/InterfaceShowcase';
+import navImg from '../assets/device-front-nav.png';
 import './early-access.css';
+import './aventura-motion.css';
+import './specifications.css';
 
 const API_BASE = import.meta.env.DEV ? '/api' : 'https://backend.justride.cc/api';
-const benefits = [
-  ['01', 'GLANCEABLE', 'See the next instruction without navigating through a phone interface.'],
-  ['02', 'CONNECTED', 'Navigation stays in step with the JustRide mobile experience.'],
-  ['03', 'RIDER-FOCUSED', 'A dedicated display for what matters while riding.'],
-];
 
 function InterestForm() {
   const [status, setStatus] = useState('idle');
@@ -25,9 +23,9 @@ function InterestForm() {
   }, [retryAfter]);
   async function submit(event) {
     event.preventDefault();
-    if (retryAfter || status === 'sending' || !emailConsent) return;
+    if (retryAfter || status === 'sending') return;
     const form = event.currentTarget;
-    if (!form.reportValidity()) return;
+    if (!form.reportValidity() || !emailConsent) return;
     const fields = new FormData(form);
     const payload = Object.fromEntries(fields);
     payload.emailConsent = form.elements.emailConsent.checked;
@@ -49,72 +47,71 @@ function InterestForm() {
     }
   }
 
-  if (status === 'success') return <div className="interest-success" role="status" tabIndex="-1"><span className="interest-success__icon"><Check size={30} /></span><p className="eyebrow">INTEREST RECEIVED</p><h2>YOU'RE ON THE LIST.</h2><p>{confirmationMessage || 'Thanks for your interest in JustRide. Your details have been received.'}</p></div>;
+  if (status === 'success') return <div className="interest-success" role="status" tabIndex="-1"><Check size={32} aria-hidden="true" /><h3>You're on the list.</h3><p>{confirmationMessage || 'Thanks for your interest in JustRide Aventura. Your details have been received.'}</p></div>;
 
-  return <form className="interest-form" onSubmit={submit}>
+  return <form className="interest-form" onSubmit={submit} aria-busy={status === 'sending'}>
     <div className="interest-form__grid">
       <label>Name <span aria-hidden="true">*</span><input name="name" autoComplete="name" minLength="2" maxLength="100" required /></label>
       <label>Email <span aria-hidden="true">*</span><input name="email" type="email" autoComplete="email" maxLength="254" required /></label>
       <label>City <span aria-hidden="true">*</span><input name="city" autoComplete="address-level2" minLength="2" maxLength="100" required /></label>
     </div>
-    <label>Would you consider buying JustRide? <select name="purchaseIntent" defaultValue=""><option value="">Select an option</option><option>Yes</option><option>Maybe</option><option>I want to know the price first</option></select></label>
-    <label>Preferred price range <span className="optional">Optional</span><select name="priceRange" defaultValue=""><option value="">Select a price range</option><option value="4999-5999">₹4,999–₹5,999</option><option value="5999-6999">₹5,999–₹6,999</option><option value="6999-7999">₹6,999–₹7,999</option><option value="7999-8999">₹7,999–₹8,999</option></select></label>
-    <label>What would you expect from JustRide? <span className="optional">Optional</span><textarea name="notes" rows="3" maxLength="1000" /></label>
+    <label className="interest-note">What would you expect from JustRide? <span className="optional">Optional</span><textarea name="notes" rows="3" maxLength="1000" placeholder="Tell us what matters on your rides." /></label>
     <div className="honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex="-1" autoComplete="off" /></label></div>
     <label className="interest-email-consent">
       <input type="checkbox" name="emailConsent" required checked={emailConsent} onChange={event => setEmailConsent(event.target.checked)} />
       <span>I agree to receive JustRide emails, including my interest confirmation, product updates and availability announcements.</span>
     </label>
-    <p className="interest-consent">Please confirm your email consent to register your interest.</p>
+    <p className="interest-consent">Free to register. No payment or order.</p>
     {error && <p className="interest-error" role="alert">{error}</p>}
-    <button className="button button--primary interest-submit" type="submit" disabled={!emailConsent || status === 'sending' || retryAfter > 0}>{retryAfter > 0 ? `TRY AGAIN IN ${retryAfter}s` : status === 'sending' ? 'SENDING…' : "I'M INTERESTED"}<ArrowRight size={18} /></button>
+    <button className="button button--primary interest-submit" type="submit" disabled={status === 'sending' || retryAfter > 0}>{retryAfter > 0 ? `Try again in ${retryAfter}s` : status === 'sending' ? 'Sending…' : 'Keep me updated'}{status === 'sending' ? <LoaderCircle className="interest-spinner" size={18} aria-hidden="true" /> : <ArrowUpRight size={18} aria-hidden="true" />}</button>
   </form>;
 }
 
 export default function EarlyAccessPage() {
+  const dialogRef = useRef(null);
+  const [registrationOpen, setRegistrationOpen] = useState(() => window.location.hash === '#interest');
+  useEffect(() => {
+    const openFromHash = () => {
+      if (window.location.hash === '#interest') setRegistrationOpen(true);
+    };
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
+  }, []);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!registrationOpen) {
+      if (dialog.open) dialog.close();
+      return;
+    }
+    dialog.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [registrationOpen]);
+  const openRegistration = event => {
+    event?.preventDefault();
+    setRegistrationOpen(true);
+  };
   return <div className="early-page" id="top">
-    <LandingHeader />
-
-    <section className="early-hero">
-      <div className="container early-hero__grid">
-        <div className="early-hero__copy">
-          <p className="eyebrow eyebrow--line">CIRCULAR MOTORCYCLE NAVIGATION</p>
-          <h1>THE NEXT TURN.<br /><em>AT A GLANCE.</em></h1>
-          <p className="hero-lede">Turn-by-turn navigation on a compact 1.43-inch circular display. Built to keep the next direction in view.</p>
-          <p className="early-hero__battery">2500 mAh battery · 10–12-hour backup</p>
-          <a className="text-link" href="#product">Explore the device <ArrowRight size={17} /></a>
-        </div>
-        <aside className="early-hero__interest" id="interest" aria-labelledby="interest-title">
-          <p className="eyebrow">REGISTER YOUR INTEREST</p>
-          <h2 id="interest-title">BE FIRST IN LINE.</h2>
-          <p>Register your interest for JustRide product and availability updates.</p>
-          <InterestForm />
-        </aside>
-        <div className="early-hero__visual">
-          <DeviceImage view="front" alt="Circular JustRide display showing a left turn in 300 metres" width="1254" height="1254" fetchPriority="high" />
-          <span>JUSTRIDE / THE CIRCULAR RIDER DISPLAY</span>
-        </div>
+    <LandingHeader onRegister={openRegistration} />
+    <section className="aventura-overview" id="product" aria-labelledby="aventura-title">
+      <div className="aventura-intro">
+        <h1 id="aventura-title"><span className="aventura-title-line"><span>Aventura</span></span></h1>
+        <p className="aventura-tagline">Every journey has a story.</p>
+        <p className="aventura-description">JustRide Aventura is a 1.75-inch motorcycle navigation display.</p>
+        <div className="aventura-hero-actions"><button className="button" type="button" onClick={openRegistration}>Get launch updates<ArrowUpRight size={18} aria-hidden="true" /></button><a className="aventura-explore" href="#interface">Explore the display<ArrowUpRight size={18} aria-hidden="true" /></a></div>
+        <p className="aventura-price">Price coming soon.</p>
       </div>
-      <div className="container early-feature-strip" aria-label="Device specifications">
-        <span><Eye size={17} /> 1.43-inch circular display</span>
-        <span><Battery size={17} /> 2500 mAh battery</span>
-        <span><Clock size={17} /> 10–12-hour backup</span>
-        <span><Map size={17} /> Turn-by-turn navigation</span>
-      </div>
+      <div className="aventura-stage"><div className="aventura-hero-disc"><img src={navImg} alt="JustRide Aventura circular navigation display with green route and turn directions" width="1254" height="1254" fetchPriority="high" sizes="(max-width: 767px) 330px, 492px" /></div></div>
     </section>
+    <InterfaceShowcase id="interface" />
 
-    <section className="section early-why" id="product"><div className="container"><div className="early-heading-row"><div><p className="eyebrow">WHY JUSTRIDE</p><h2>EVERYTHING YOU NEED.<br /><span>NOTHING YOU DON'T.</span></h2></div><p>Your phone handles the route. JustRide keeps the essentials visible.</p></div><div className="early-benefits">{benefits.map(([number, title, copy]) => <article key={number}><span>{number} /</span><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
-
-    <section className="section early-product" id="specifications"><div className="container early-product__grid"><div className="early-product__visual"><DeviceImage view="side" alt="Side profile of the circular JustRide device and its power button" width="1254" height="1254" loading="lazy" /><span>01 / THE CIRCULAR DEVICE</span></div><div className="early-product__copy"><p className="eyebrow">THE PRODUCT EXPERIENCE</p><h2>SMALL DISPLAY.<br /><em>READY FOR THE RIDE.</em></h2><p className="section-lede">A circular display for the next turn, with a 2500 mAh battery and 10–12 hours of backup.</p><div className="early-product__facts"><div><span>01</span><strong>1.43-INCH DISPLAY</strong><small>Circular navigation display. <a href="/faqs">Product FAQs →</a></small></div><div><span>02</span><strong>2500 mAh BATTERY</strong><small>10–12-hour battery backup.</small></div><div><span>03</span><strong>TURN-BY-TURN NAVIGATION</strong><small>The next maneuver and distance at a glance.</small></div></div></div></div></section>
-
-    <section className="section early-how" id="how-it-works"><div className="container"><div className="early-section-heading"><p className="eyebrow">HOW IT WORKS</p><h2>THREE STEPS.<br />ONE CLEARER RIDE.</h2><p className="section-lede">The app plans the route. The display brings the essentials into view.</p></div><div className="early-steps"><article><span>STEP 01</span><Smartphone size={27} /><h3>SET YOUR DESTINATION</h3><p>Choose where you're going in the JustRide app.</p></article><ChevronRight className="early-step-arrow" size={23} /><article><span>STEP 02</span><Bluetooth size={27} /><h3>CONNECT & RIDE</h3><p>Navigation information is synchronized with the JustRide device.</p></article><ChevronRight className="early-step-arrow" size={23} /><article><span>STEP 03</span><Eye size={27} /><h3>FOLLOW THE ESSENTIALS</h3><p>See the route and next maneuver directly on the display.</p></article></div></div></section>
-
-
-    <section className="section early-essentials"><div className="container"><p className="eyebrow">BUILT AROUND RIDING</p><h2>LESS CLUTTER.<br /><em>MORE RIDE.</em></h2><div className="early-essentials__grid"><div><strong>CLEAR DIRECTIONS</strong><p>Large maneuver information for quick understanding.</p></div><div><strong>ROUTE VIEW</strong><p>See the route without a full phone interface.</p></div><div><strong>CONNECTED</strong><p>Works together with the JustRide mobile experience.</p></div><div><strong>COMPACT DISPLAY</strong><p>A dedicated view designed for the motorcycle.</p></div></div></div></section>
-
-
+      <dialog className="interest-dialog" ref={dialogRef} aria-labelledby="registration-dialog-title" onClose={() => setRegistrationOpen(false)} onClick={event => { if (event.target === event.currentTarget) { const bounds = event.currentTarget.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) setRegistrationOpen(false); } }}>
+        <div className="interest-dialog__heading"><h2 id="registration-dialog-title">Join the journey.</h2><button className="interest-dialog__close" type="button" aria-label="Close registration" onClick={() => setRegistrationOpen(false)}><X size={22} aria-hidden="true" /></button></div>
+        <p>Get launch updates for JustRide Aventura. Price coming soon.</p>
+        <InterestForm />
+      </dialog>
     <WebsiteFaqs compact />
-    <section className="early-final"><div className="container early-final__inner"><div><p className="eyebrow">THE ROAD AHEAD</p><h2>LOOKS CLEARER.</h2><p>JustRide is being built for riders who want navigation to stay useful without taking over the ride.</p></div><a className="button button--primary" href="#interest">I'M INTERESTED <ArrowRight size={18} /></a></div></section>
     <LandingFooter />
   </div>;
 }

@@ -1,0 +1,46 @@
+.early-page { --aventura-ease: cubic-bezier(.22, 1, .36, 1); --aventura-expo: cubic-bezier(.16, 1, .3, 1); }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes aventura-line-in { from { transform: translateY(105%); } to { transform: none; } }
+  @keyframes aventura-product-in { from { transform: translateY(12px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes aventura-panel-in { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; transform: none; } }
+  @keyframes aventura-copy-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes aventura-check-in { from { stroke-dashoffset: 36; } to { stroke-dashoffset: 0; } }
+  @keyframes aventura-spin { to { transform: rotate(360deg); } }
+  .aventura-title-line > span { animation: aventura-line-in 760ms var(--aventura-expo) both; }
+  .aventura-hero-disc img { animation: aventura-product-in 1000ms var(--aventura-expo) both; }
+  .aventura-intro > p, .aventura-hero-actions { animation: aventura-copy-in 600ms var(--aventura-ease) 80ms both; }
+  .aventura-preview__image { transition: opacity 420ms ease, transform 650ms var(--aventura-ease); }
+  .aventura-preview__controls button, .aventura-preview__controls button > svg { transition: color 180ms ease, background-color 240ms ease, transform 300ms var(--aventura-ease); }
+  .early-page .button { transition: transform 140ms var(--aventura-ease), background-color 180ms ease; }
+  .early-page .button > svg:not(.interest-spinner) { transition: transform 240ms var(--aventura-ease); }
+  .early-page .button:active:not(:disabled) { transform: scale(.98); }
+  .early-page .button:focus-visible > svg:not(.interest-spinner) { transform: translate(3px, -3px); }
+  .interest-form input, .interest-form textarea { transition: border-color 180ms ease; }
+  .interest-note summary > svg, .aventura-journey summary > svg { transition: transform 240ms var(--aventura-ease); }
+  .interest-note[open] > label, .aventura-journey details[open] > p { animation: aventura-copy-in 240ms var(--aventura-ease); }
+  .interest-spinner { animation: aventura-spin 850ms linear infinite; }
+  .interest-success { animation: aventura-copy-in 500ms var(--aventura-ease) both; }
+  .interest-success > svg path { stroke-dasharray: 36; animation: aventura-check-in 500ms var(--aventura-ease) both; }
+  .interest-error { animation: aventura-copy-in 200ms var(--aventura-ease) both; }
+  .early-page .early-mobile-nav { transform-origin: top right; animation: aventura-panel-in 240ms var(--aventura-ease) both; }
+  .early-page .faq-list details[open] p { animation: aventura-copy-in 240ms var(--aventura-ease); }
+  .early-page .faq-list summary::after { transition: transform 240ms var(--aventura-ease); }
+  .early-page .aventura-preview__images.motion-reveal, .early-page .aventura-screen.motion-reveal { transform: scale(.95); transition-duration: 850ms; transition-timing-function: var(--aventura-expo); }
+  .early-page .aventura-preview__images.motion-reveal.is-visible, .early-page .aventura-screen.motion-reveal.is-visible { transform: none; }
+  .aventura-final__inner { transition: background-color 200ms ease; }
+  .aventura-final__inner > p > svg { transition: transform 300ms var(--aventura-ease); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .early-page .button:hover:not(:disabled) > svg:not(.interest-spinner) { transform: translate(3px, -3px); }
+  .aventura-preview__controls button:hover > svg { transform: rotate(45deg); }
+  .aventura-final__inner:hover > p > svg { transform: translate(5px, -5px); }
+}
+@supports (animation-timeline: view()) {
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .aventura-overview { view-timeline-name: --aventura-overview; view-timeline-axis: block; }
+    @keyframes aventura-device-drift { from { transform: translateY(-1%); } to { transform: translateY(3%); } }
+    .aventura-hero-disc { animation: aventura-device-drift linear both; animation-timeline: --aventura-overview; animation-range: entry 0% exit 100%; }
+    @keyframes aventura-name-scale { from { transform: scale(1); } to { transform: scale(.96); } }
+    .aventura-intro h1 { transform-origin: left center; animation: aventura-name-scale linear both; animation-timeline: --aventura-overview; animation-range: exit 0% exit 100%; }
+  }
+}

@@ -1,70 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from './components/common/Navbar';
-import Footer from './components/common/Footer';
-import AboutUsPage from './pages/AboutUsPage';
-import ProductPage from './pages/ProductPage';
-import DownloadPage from './pages/DownloadPage';
-import ContactUsPage from './pages/ContactUsPage';
+import React, { useEffect } from 'react';
 import EarlyAccessPage from './pages/EarlyAccessPage';
-import FaqPage from './pages/FaqPage';
-import { LandingHeader, LandingFooter } from './components/common/LandingNavigation';
 import useScrollReveal from './hooks/useScrollReveal';
 
-export const routes = { home: '/', about: '/about-us', product: '/product', download: '/download', contact: '/contact-us', earlyAccess: '/early-access', faqs: '/faqs' };
-
-const pathToPage = (path) => {
-  const clean = path.replace(/\/$/, '') || '/';
-  if (clean === '/about') return 'about';
-  if (clean === '/contact') return 'contact';
-  return Object.keys(routes).find((page) => routes[page] === clean) || 'home';
+export const routes = {
+  home: '/',
+  about: '/about-us',
+  specifications: '/specifications',
+  product: '/product',
+  download: '/download',
+  contact: '/contact-us',
+  earlyAccess: '/early-access',
+  faqs: '/faqs',
 };
 
-const titles = {
-  home: 'JustRide Early Interest | Keep Your Eyes on the Ride',
-  about: 'About JustRide | Built Around the Ride',
-  product: 'JustRide Device | Motorcycle Navigation Display',
-  download: 'Download the JustRide App',
-  contact: 'Contact JustRide',
-  faqs: 'JustRide FAQs | Product, Navigation and App',
-  earlyAccess: 'JustRide Early Access | Keep Your Eyes on the Ride',
-};
 
 export default function App() {
-  const [page, setPage] = useState(() => pathToPage(window.location.pathname));
-  useScrollReveal(page);
+  useScrollReveal('home');
   useEffect(() => {
-    const handlePopState = () => setPage(pathToPage(window.location.pathname));
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-  useEffect(() => {
-    document.title = titles[page];
+    document.title = 'JustRide Aventura | Every journey has a story';
     document.querySelector('meta[name="description"]')?.setAttribute('content',
-      page === 'product'
-        ? 'Explore the JustRide connected motorcycle navigation display, rider-focused interface, hardware and specifications.'
-        : 'JustRide brings essential route information from your phone to a dedicated motorcycle navigation display.');
-  }, [page]);
-
-  const navigate = (event, destination) => {
-    if (event?.defaultPrevented || event?.metaKey || event?.ctrlKey || event?.shiftKey || event?.altKey || event?.button > 0) return;
-    event?.preventDefault();
-    if (window.location.pathname !== routes[destination]) window.history.pushState({}, '', routes[destination]);
-    setPage(destination);
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  };
-
-  if (page === 'home' || page === 'earlyAccess') return <div className="site-shell"><a className="skip-link" href="#main-content">Skip to content</a><main id="main-content"><EarlyAccessPage /></main></div>;
-
-  return <div className="site-shell">
-    <a className="skip-link" href="#main-content">Skip to content</a>
-    {page === 'faqs' ? <LandingHeader faqPage /> : <Navbar page={page} navigate={navigate} />}
-    <main id="main-content" key={page}>
-      {page === 'about' && <AboutUsPage navigate={navigate} />}
-      {page === 'product' && <ProductPage navigate={navigate} />}
-      {page === 'download' && <DownloadPage navigate={navigate} />}
-      {page === 'contact' && <ContactUsPage navigate={navigate} />}
-      {page === 'faqs' && <FaqPage />}
-    </main>
-    {page === 'faqs' ? <LandingFooter faqPage /> : <Footer navigate={navigate} />}
-  </div>;
+      'Meet JustRide Aventura, the 1.75-inch motorcycle navigation display. Every journey has a story. Price coming soon. Register your interest.');
+    const showHomepage = () => {
+      if (window.location.pathname === '/') return;
+      const destinations = { '/faqs': '#faqs', '/specifications': '#interface', '/specs': '#interface', '/product': '#product', '/early-access': '#interest' };
+      const hash = window.location.hash || destinations[window.location.pathname.replace(/\/$/, '')] || '';
+      window.history.replaceState({}, '', `/${hash}`);
+      window.dispatchEvent(new Event('hashchange'));
+      if (hash && hash !== '#interest') document.getElementById(hash.slice(1))?.scrollIntoView();
+    };
+    showHomepage();
+    window.addEventListener('popstate', showHomepage);
+    return () => window.removeEventListener('popstate', showHomepage);
+  }, []);
+  return <div className="site-shell"><a className="skip-link" href="#main-content">Skip to content</a><main id="main-content"><EarlyAccessPage /></main></div>;
 }
