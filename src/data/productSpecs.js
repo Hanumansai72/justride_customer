@@ -185,7 +185,7 @@ export const featureGroups = [
 export const uiScreens = [
   {
     id: 'clock',
-    specifications: [['Display', '1.75-inch circular'], ['Ride data', 'Time, date & distance'], ['Battery life', '10–12 hours (target)']],
+    specifications: [['Display', '1.75-inch circular'], ['Ride data', 'Time, date & distance'], ['Battery life', '10–12 hours']],
     label: 'Overview',
     tagline: 'Your ride at a glance',
     title: 'Time, date and distance.',

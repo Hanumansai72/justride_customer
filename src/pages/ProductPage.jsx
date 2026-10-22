@@ -10,7 +10,7 @@ const specs = [
   ['Product',            'JustRide Aventura'],
   ['Display',           '1.75-inch circular display'],
   ['Battery capacity',  '1000 mAh'],
-  ['Battery life',      '10–12 hours (target)'],
+  ['Battery life',      '10–12 hours'],
   ['Connectivity',      'Bluetooth'],
   ['Navigation',        'Turn-by-turn'],
   ['Call support',      'Call notifications and supported controls'],
